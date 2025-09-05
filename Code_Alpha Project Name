@@ -1,0 +1,20 @@
+from scapy.all import sniff, IP, TCP, UDP, ICMP
+
+def packet_sniffer(packet):
+    if packet.haslayer(TCP):
+        # Analyze TCP packets
+        print("TCP Packet:")
+        print(f"Source Port: {packet[TCP].sport}, Destination Port: {packet[TCP].dport}")
+        print(f"Flags: {packet[TCP].flags}")
+    elif packet.haslayer(UDP):
+        # Analyze UDP packets
+        print("UDP Packet:")
+        print(f"Source Port: {packet[UDP].sport}, Destination Port: {packet[UDP].dport}")
+        print(f"Length: {packet[UDP].len}")
+    elif packet.haslayer(ICMP):
+        # Analyze ICMP packets
+        print("ICMP Packet:")
+        print(f"Type: {packet[ICMP].type}, Code: {packet[ICMP].code}")
+
+# Start sniffing packets
+sniff(prn=packet_sniffer, count=10)
